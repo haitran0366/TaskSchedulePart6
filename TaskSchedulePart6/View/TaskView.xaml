@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:vm="clr-namespace:TaskSchedulePart6.ViewModel"
+             x:Class="TaskSchedulePart6.View.TaskView">
+    <ContentPage.BindingContext>
+        <vm:TaskViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Margin="5,30,5,5" >
+            <StackLayout>
+                <Label Text="Task Management" FontSize="20" FontAttributes="Bold" TextColor="Black" Margin="10"/>
+            </StackLayout>
+            <!--Add-->
+            <Frame IsVisible="{Binding IsViewDetail}">
+                <StackLayout>
+                    <Entry x:Name="taskName" Text="{Binding TaskName}" Placeholder="Task name" />
+                    <Entry x:Name="description" Text="{Binding Description}" Placeholder="Description" />
+                    <Label  Text="Due Date"></Label>
+                    <DatePicker x:Name="DueDate" Date="{Binding DueDate, Mode=TwoWay}" ></DatePicker>
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="{Binding TypeCommand,Mode=TwoWay}" Command="{Binding cmdProcessTask}" BackgroundColor="DarkGreen" WidthRequest="100" TextColor="White"/>
+                        <Button Text="Cancel" Command="{Binding cmdCancelTask}" BackgroundColor="DarkGreen" WidthRequest="100" TextColor="White"/>
+                    </StackLayout>
+
+                </StackLayout>
+            </Frame>
+
+            <ListView x:Name="TaskList" ItemsSource="{Binding TaskList, Mode=TwoWay}" IsVisible="True"
+                      SelectedItem="{Binding SelectedTask, Mode=TwoWay}"
+                      HasUnevenRows="True" BackgroundColor="Transparent" Margin="10"
+                      SeparatorColor="Red" SelectionMode="Single">
+                <ListView.Header>
+                    <StackLayout Orientation="Horizontal" BackgroundColor="DarkGreen">
+                        <Button BackgroundColor="Transparent" TextTransform="None" TextColor="Yellow" FontAttributes="Bold" Text="Add" Command="{Binding cmdAddaTask}" />
+                        <Button BackgroundColor="Transparent" TextTransform="None" TextColor="Yellow" FontAttributes="Bold" Text="Delete" Command="{Binding cmdDeleteaTask}" />
+                        <Button BackgroundColor="Transparent" TextTransform="None" TextColor="Yellow" FontAttributes="Bold" Text="Update" Command="{Binding cmdUpdateaTask}" />
+                    </StackLayout>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout Orientation="Vertical" Margin="10" BackgroundColor="Chocolate">
+                                <Label Text="{Binding TaskName}"></Label>
+                                <Label Text="{Binding Description}"></Label>
+                                <Label Text="{Binding DueDate}"></Label>
+                            </StackLayout>
+                        </ViewCell>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
